@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Compress Image to 20KB">
+  <defs>
+    <linearGradient id="g" x1="8" x2="56" y1="8" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ff4f9a"/>
+      <stop offset=".34" stop-color="#ffbf3f"/>
+      <stop offset=".68" stop-color="#2fd4ff"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#171321"/>
+  <path fill="url(#g)" d="M38.5 5.9 16.2 35.2h14.1l-4.8 22.9 22.3-29.3H33.7l4.8-22.9Z"/>
+</svg>
