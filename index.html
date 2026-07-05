@@ -1527,15 +1527,18 @@
 
   <script>
     const FIXED_TARGET_KB = 20;
-    const MAX_SIZE_BYTES = 20 * 1024;
+    const MAX_SIZE_BYTES = 20 * 1000;
+    const SAFE_TARGET_BYTES = 19 * 1000;
     const UNDER_20KB_ERROR = "We couldn’t compress this image under 20KB. Try a smaller or simpler image.";
     const SUPPORTED_TYPES = new Set(["image/jpeg", "image/jpg", "image/png", "image/webp"]);
-    const MIN_ACCEPTABLE_QUALITY = 0.34;
+    const MIN_ACCEPTABLE_QUALITY = 0.16;
     const MAX_QUALITY = 0.92;
-    const MAX_RESIZE_ROUNDS = 18;
-    const QUALITY_SEARCH_ROUNDS = 9;
-    const RESIZE_STEP = 0.86;
-    const MIN_LONG_EDGE = 120;
+    const MAX_RESIZE_ROUNDS = 30;
+    const QUALITY_SEARCH_ROUNDS = 12;
+    const RESIZE_STEP = 0.82;
+    const MIN_LONG_EDGE = 36;
+    const EMERGENCY_MIN_LONG_EDGE = 18;
+    const EMERGENCY_QUALITIES = [0.14, 0.1, 0.07];
 
     const state = {
       file: null,
@@ -1783,7 +1786,8 @@
         throw new Error("Please upload a JPG, PNG, or WebP image.");
       }
 
-      const targetBytes = Math.max(1, Math.round(targetKb * 1024));
+      const hardMaxBytes = Math.min(MAX_SIZE_BYTES, Math.round(targetKb * 1000));
+      const targetBytes = Math.min(SAFE_TARGET_BYTES, hardMaxBytes - 1);
       onProgress(4, "Reading your image locally");
       const image = await loadImage(file);
 
@@ -1795,7 +1799,7 @@
             blob: file,
             originalBytes: file.size,
             compressedBytes: file.size,
-            targetBytes,
+            targetBytes: hardMaxBytes,
             mimeType,
             formatLabel: formatLabelForMime(mimeType),
             extension: extensionForMime(mimeType),
@@ -1832,13 +1836,13 @@
             }
           }
 
-          if (bestForScale) {
+          if (bestForScale && isStrictlyUnderMaxSize(bestForScale.blob.size)) {
             onProgress(100, "Compression complete");
             return {
               blob: bestForScale.blob,
               originalBytes: file.size,
               compressedBytes: bestForScale.blob.size,
-              targetBytes,
+              targetBytes: hardMaxBytes,
               mimeType: bestForScale.blob.type || outputMime,
               formatLabel: formatLabelForMime(bestForScale.blob.type || outputMime),
               extension: extensionForMime(bestForScale.blob.type || outputMime),
@@ -1852,6 +1856,25 @@
           const nextLongEdge = Math.max(image.width, image.height) * scale * RESIZE_STEP;
           if (nextLongEdge < MIN_LONG_EDGE) break;
           scale *= RESIZE_STEP;
+        }
+
+        onProgress(98, "Forcing the file under 20KB");
+        const emergencyCandidate = await forceUnder20KB(image, outputMime, targetBytes);
+        if (emergencyCandidate && isStrictlyUnderMaxSize(emergencyCandidate.blob.size)) {
+          onProgress(100, "Compression complete");
+          return {
+            blob: emergencyCandidate.blob,
+            originalBytes: file.size,
+            compressedBytes: emergencyCandidate.blob.size,
+            targetBytes: hardMaxBytes,
+            mimeType: emergencyCandidate.blob.type || outputMime,
+            formatLabel: formatLabelForMime(emergencyCandidate.blob.type || outputMime),
+            extension: extensionForMime(emergencyCandidate.blob.type || outputMime),
+            width: emergencyCandidate.width,
+            height: emergencyCandidate.height,
+            quality: emergencyCandidate.quality,
+            scale: emergencyCandidate.scale
+          };
         }
 
         throw new Error(UNDER_20KB_ERROR);
@@ -1928,6 +1951,26 @@
       return { blob, width, height, quality, scale };
     }
 
+    async function forceUnder20KB(image, preferredMimeType, limitBytes) {
+      const maxLongEdge = Math.max(image.width, image.height);
+      const mimeTypes = [...new Set([preferredMimeType, "image/jpeg"])];
+
+      for (const mimeType of mimeTypes) {
+        for (let longEdge = Math.min(maxLongEdge, 240); longEdge >= EMERGENCY_MIN_LONG_EDGE; longEdge = Math.floor(longEdge * 0.72)) {
+          const scale = Math.max(EMERGENCY_MIN_LONG_EDGE / maxLongEdge, longEdge / maxLongEdge);
+
+          for (const quality of EMERGENCY_QUALITIES) {
+            const candidate = await renderCandidate(image, mimeType, quality, scale);
+            if (candidate.blob.size <= limitBytes) {
+              return candidate;
+            }
+          }
+        }
+      }
+
+      return null;
+    }
+
     function canvasToBlob(canvas, mimeType, quality) {
       return new Promise((resolve, reject) => {
         canvas.toBlob((blob) => {
@@ -1992,10 +2035,10 @@
     }
 
     function formatBytes(bytes) {
-      if (bytes < 1024) return bytes + " B";
-      const kb = bytes / 1024;
-      if (kb < 1024) return (kb >= 100 ? kb.toFixed(0) : kb.toFixed(1)) + " KB";
-      return (kb / 1024).toFixed(2) + " MB";
+      if (bytes < 1000) return bytes + " B";
+      const kb = bytes / 1000;
+      if (kb < 1000) return (kb >= 100 ? kb.toFixed(0) : kb.toFixed(1)) + " KB";
+      return (kb / 1000).toFixed(2) + " MB";
     }
 
     function getSavedPercentage(originalBytes, compressedBytes) {
@@ -2004,7 +2047,11 @@
     }
 
     function isWithinMaxSize(bytes) {
-      return bytes <= MAX_SIZE_BYTES;
+      return bytes < MAX_SIZE_BYTES;
+    }
+
+    function isStrictlyUnderMaxSize(bytes) {
+      return bytes < MAX_SIZE_BYTES;
     }
 
     function setProgress(progress, message) {
