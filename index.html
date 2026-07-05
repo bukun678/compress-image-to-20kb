@@ -1025,6 +1025,183 @@
       color: #9f1239;
     }
 
+    .batch-note {
+      margin: 0;
+      color: #667085;
+      font-size: 0.92rem;
+      font-weight: 750;
+      line-height: 1.55;
+    }
+
+    .batch-toolbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      gap: 10px;
+      align-items: center;
+      margin-top: 16px;
+    }
+
+    .queue-summary {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 8px 20px rgba(80, 65, 130, 0.06);
+      padding: 13px 14px;
+      color: #5f6878;
+      font-size: 0.92rem;
+      font-weight: 900;
+    }
+
+    .secondary-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
+      border: 1px solid rgba(124, 99, 255, 0.18);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.86);
+      color: #4f46a5;
+      box-shadow: 0 10px 24px rgba(80, 65, 130, 0.08);
+      cursor: pointer;
+      font-weight: 950;
+      padding: 12px 16px;
+      transition: 180ms ease;
+      white-space: nowrap;
+    }
+
+    .secondary-button:hover:not(:disabled) {
+      transform: translateY(-1px);
+      background: #f8f7ff;
+    }
+
+    .secondary-button:disabled {
+      cursor: not-allowed;
+      opacity: 0.55;
+    }
+
+    .batch-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .batch-empty {
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.62);
+      color: #667085;
+      padding: 16px;
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .file-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(104px, 0.72fr) minmax(116px, 0.82fr) minmax(116px, 0.86fr) auto;
+      gap: 10px;
+      align-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.78);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: 0 10px 24px rgba(80, 65, 130, 0.08);
+      padding: 12px;
+    }
+
+    .file-main {
+      min-width: 0;
+    }
+
+    .file-title {
+      margin: 0;
+      color: var(--ink);
+      font-size: 0.95rem;
+      font-weight: 950;
+      overflow-wrap: anywhere;
+    }
+
+    .file-error {
+      margin: 6px 0 0;
+      color: #b42318;
+      font-size: 0.82rem;
+      font-weight: 800;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+
+    .file-success {
+      margin: 6px 0 0;
+      color: #047857;
+      font-size: 0.82rem;
+      font-weight: 850;
+      line-height: 1.45;
+    }
+
+    .file-metric {
+      min-width: 0;
+    }
+
+    .file-metric .label {
+      font-size: 0.64rem;
+    }
+
+    .file-metric .value {
+      font-size: 0.88rem;
+      overflow-wrap: anywhere;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      width: fit-content;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      font-weight: 950;
+    }
+
+    .status-waiting {
+      background: #f8fafc;
+      color: #475569;
+    }
+
+    .status-compressing {
+      background: #eef2ff;
+      color: #4338ca;
+    }
+
+    .status-success {
+      background: #ecfdf5;
+      color: #047857;
+    }
+
+    .status-failed {
+      background: #fef2f2;
+      color: #b42318;
+    }
+
+    .row-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      border-radius: 14px;
+      background: var(--ink);
+      color: white;
+      cursor: pointer;
+      font-size: 0.84rem;
+      font-weight: 950;
+      padding: 8px 12px;
+      white-space: nowrap;
+    }
+
+    .row-button:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
     .hidden {
       display: none !important;
     }
@@ -1103,6 +1280,7 @@
 
       .hero-pills,
       .tool-actions,
+      .batch-toolbar,
       .preview-grid,
       .ready-row,
       .info-grid,
@@ -1137,6 +1315,15 @@
 
       .example-value {
         font-size: 2rem;
+      }
+
+      .file-row {
+        grid-template-columns: 1fr;
+        align-items: stretch;
+      }
+
+      .file-row .row-button {
+        width: 100%;
       }
     }
   </style>
@@ -1200,59 +1387,38 @@
             </span>
           </div>
 
-          <input id="fileInput" class="sr-only" type="file" accept="image/jpeg,image/png,image/webp">
+          <input id="fileInput" class="sr-only" type="file" accept="image/jpeg,image/png,image/webp" multiple>
 
-          <div id="uploadBox" class="upload empty" tabindex="0" role="button" aria-label="Choose a JPG, PNG, or WebP image">
-            <div id="emptyState" class="drop-empty">
+          <div id="uploadBox" class="upload empty" tabindex="0" role="button" aria-label="Choose JPG, PNG, or WebP images">
+            <div class="drop-empty">
               <span class="upload-icon" aria-hidden="true">
                 <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
                   <path d="M12 16V4m0 0L7 9m5-5l5 5M5 16v3h14v-3" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </span>
-              <p class="drop-title">Drop your image here</p>
-              <p class="drop-help">or click to choose a JPG, PNG, or WebP file</p>
-            </div>
-
-            <div id="readyState" class="ready-row hidden">
-              <span class="ready-icon" aria-hidden="true">
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-                  <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <div>
-                <p class="drop-title">Ready to compress</p>
-                <p id="fileName" class="file-name"></p>
-                <div class="info-grid">
-                  <div class="info-pill">
-                    <p class="label">Original size</p>
-                    <p id="originalSizePill" class="value">Not selected</p>
-                  </div>
-                  <div class="info-pill">
-                    <p class="label">Original format</p>
-                    <p id="originalFormatPill" class="value">None</p>
-                  </div>
-                </div>
-                <div class="inline-actions">
-                  <button id="chooseAnotherButton" class="ghost-button" type="button">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12a9 9 0 0115.4-6.4M21 12a9 9 0 01-15.4 6.4M18 3v5h-5M6 21v-5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    Choose another image
-                  </button>
-                  <button id="clearButton" class="ghost-button neutral" type="button">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
-                    Clear
-                  </button>
-                </div>
-              </div>
+              <p class="drop-title">Drag and drop images here, or click to upload</p>
+              <p class="drop-help">Upload one or multiple images and compress each image to 20KB or less.</p>
             </div>
           </div>
 
-          <div class="tool-actions">
-            <div class="target-note"><strong>Target:</strong> 20KB max</div>
+          <div class="batch-toolbar">
+            <div id="queueSummary" class="queue-summary"><strong>Target:</strong> 20KB max · Up to 10 images</div>
             <button id="compressButton" class="primary-button" type="button" disabled>
               <span id="compressIcon" aria-hidden="true">
                 <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.7 5.1L19 10l-5.3 1.9L12 17l-1.7-5.1L5 10l5.3-1.9L12 3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
               </span>
-              <span id="compressText">Compress Image to 20KB or Less</span>
+              <span id="compressText">Compress Images to 20KB or Less</span>
+            </button>
+            <button id="clearButton" class="secondary-button" type="button" disabled>Clear All</button>
+          </div>
+
+          <div class="batch-toolbar">
+            <p id="batchNote" class="batch-note">JPG, PNG, and WebP are supported. Each image must be 10MB or smaller.</p>
+            <button id="downloadZipButton" class="download-button hidden" type="button">
+              <span aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 20h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              Download All as ZIP
             </button>
           </div>
 
@@ -1269,58 +1435,8 @@
             <span id="errorText"></span>
           </div>
 
-          <div class="preview-grid">
-            <article class="preview-panel">
-              <div class="preview-head">
-                <span>Before</span>
-                <span aria-hidden="true">IMG</span>
-              </div>
-              <div id="beforePreview" class="preview-box">Original image preview</div>
-            </article>
-            <article class="preview-panel">
-              <div class="preview-head">
-                <span>After</span>
-                <span aria-hidden="true">IMG</span>
-              </div>
-              <div id="afterPreview" class="preview-box">Compressed image preview</div>
-            </article>
-          </div>
-
-          <div id="resultCard" class="result-card hidden">
-            <div class="result-top">
-              <p class="success-text">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                Your image is now under 20KB.
-              </p>
-              <button id="downloadButton" class="download-button" type="button">
-                <span id="downloadIcon" aria-hidden="true">
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 20h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </span>
-                <span id="downloadText">Download 20KB Image</span>
-              </button>
-            </div>
-            <div class="stats-grid">
-              <div class="stat pink">
-                <p class="label">Original size</p>
-                <p id="resultOriginalSize" class="value">-</p>
-              </div>
-              <div class="stat cyan">
-                <p class="label">Compressed size</p>
-                <p id="resultCompressedSize" class="value">-</p>
-              </div>
-              <div class="stat green">
-                <p class="label">Saved percentage</p>
-                <p id="resultSaved" class="value">-</p>
-              </div>
-              <div class="stat violet">
-                <p class="label">Target</p>
-                <p class="value">20KB max</p>
-              </div>
-              <div class="stat amber">
-                <p class="label">Output format</p>
-                <p id="resultFormat" class="value">-</p>
-              </div>
-            </div>
+          <div id="batchList" class="batch-list">
+            <div class="batch-empty">No images selected yet.</div>
           </div>
         </section>
       </section>
@@ -1525,60 +1641,46 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script>
     const FIXED_TARGET_KB = 20;
-    const MAX_SIZE_BYTES = 20 * 1000;
-    const SAFE_TARGET_BYTES = 19 * 1000;
-    const UNDER_20KB_ERROR = "We couldn’t compress this image under 20KB. Try a smaller or simpler image.";
+    const MAX_SIZE_BYTES = 20 * 1024;
+    const SAFE_TARGET_BYTES = 19 * 1024;
+    const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
+    const MAX_FILES = 10;
+    const UNDER_20KB_ERROR = "Could not compress this image under 20KB. Try a smaller or simpler image.";
     const SUPPORTED_TYPES = new Set(["image/jpeg", "image/jpg", "image/png", "image/webp"]);
-    const MIN_ACCEPTABLE_QUALITY = 0.16;
+    const MIN_ACCEPTABLE_QUALITY = 0.12;
     const MAX_QUALITY = 0.92;
-    const MAX_RESIZE_ROUNDS = 30;
+    const MAX_RESIZE_ROUNDS = 34;
     const QUALITY_SEARCH_ROUNDS = 12;
     const RESIZE_STEP = 0.82;
-    const MIN_LONG_EDGE = 36;
-    const EMERGENCY_MIN_LONG_EDGE = 18;
-    const EMERGENCY_QUALITIES = [0.14, 0.1, 0.07];
+    const MIN_LONG_EDGE = 32;
+    const EMERGENCY_MIN_LONG_EDGE = 16;
+    const EMERGENCY_QUALITIES = [0.12, 0.09, 0.06, 0.04];
 
     const state = {
-      file: null,
-      originalUrl: null,
-      result: null,
-      toastTimer: null,
-      downloadFeedbackTimer: null,
+      items: [],
       isCompressing: false,
-      isDownloadFeedbackActive: false
+      toastTimer: null
     };
 
     const els = {
       fileInput: document.getElementById("fileInput"),
       uploadBox: document.getElementById("uploadBox"),
-      emptyState: document.getElementById("emptyState"),
-      readyState: document.getElementById("readyState"),
-      fileName: document.getElementById("fileName"),
-      originalSizePill: document.getElementById("originalSizePill"),
-      originalFormatPill: document.getElementById("originalFormatPill"),
-      chooseAnotherButton: document.getElementById("chooseAnotherButton"),
-      clearButton: document.getElementById("clearButton"),
       compressButton: document.getElementById("compressButton"),
       compressIcon: document.getElementById("compressIcon"),
       compressText: document.getElementById("compressText"),
+      clearButton: document.getElementById("clearButton"),
+      downloadZipButton: document.getElementById("downloadZipButton"),
+      batchList: document.getElementById("batchList"),
+      queueSummary: document.getElementById("queueSummary"),
       progressBox: document.getElementById("progressBox"),
       statusText: document.getElementById("statusText"),
       progressPercent: document.getElementById("progressPercent"),
       progressFill: document.getElementById("progressFill"),
       errorBox: document.getElementById("errorBox"),
       errorText: document.getElementById("errorText"),
-      beforePreview: document.getElementById("beforePreview"),
-      afterPreview: document.getElementById("afterPreview"),
-      resultCard: document.getElementById("resultCard"),
-      downloadButton: document.getElementById("downloadButton"),
-      downloadIcon: document.getElementById("downloadIcon"),
-      downloadText: document.getElementById("downloadText"),
-      resultOriginalSize: document.getElementById("resultOriginalSize"),
-      resultCompressedSize: document.getElementById("resultCompressedSize"),
-      resultSaved: document.getElementById("resultSaved"),
-      resultFormat: document.getElementById("resultFormat"),
       toast: document.getElementById("toast"),
       year: document.getElementById("year")
     };
@@ -1586,37 +1688,29 @@
     els.year.textContent = new Date().getFullYear();
 
     els.uploadBox.addEventListener("click", () => {
-      if (!state.file) els.fileInput.click();
+      if (!state.isCompressing) els.fileInput.click();
     });
 
     els.uploadBox.addEventListener("keydown", (event) => {
-      if ((event.key === "Enter" || event.key === " ") && !state.file) {
+      if ((event.key === "Enter" || event.key === " ") && !state.isCompressing) {
         event.preventDefault();
         els.fileInput.click();
       }
     });
 
     els.fileInput.addEventListener("change", (event) => {
-      selectFile(event.target.files && event.target.files[0]);
+      addFiles(Array.from(event.target.files || []));
+      els.fileInput.value = "";
     });
 
-    els.chooseAnotherButton.addEventListener("click", (event) => {
-      event.stopPropagation();
-      els.fileInput.click();
-    });
-
-    els.clearButton.addEventListener("click", (event) => {
-      event.stopPropagation();
-      clearFile();
-    });
-
-    els.compressButton.addEventListener("click", handleCompress);
-    els.downloadButton.addEventListener("click", handleDownload);
+    els.compressButton.addEventListener("click", compressAll);
+    els.clearButton.addEventListener("click", clearAll);
+    els.downloadZipButton.addEventListener("click", downloadZip);
 
     ["dragenter", "dragover"].forEach((name) => {
       els.uploadBox.addEventListener(name, (event) => {
         event.preventDefault();
-        els.uploadBox.classList.add("dragging");
+        if (!state.isCompressing) els.uploadBox.classList.add("dragging");
       });
     });
 
@@ -1628,172 +1722,236 @@
     });
 
     els.uploadBox.addEventListener("drop", (event) => {
-      selectFile(event.dataTransfer.files && event.dataTransfer.files[0]);
+      if (state.isCompressing) return;
+      addFiles(Array.from(event.dataTransfer.files || []));
     });
 
-    function selectFile(file) {
-      if (!file) return;
+    function addFiles(files) {
+      if (!files.length || state.isCompressing) return;
 
-      if (!isSupportedImage(file)) {
-        showError("Please upload a JPG, PNG, or WebP image.");
-        clearFile(true);
+      hideError();
+      const remainingSlots = MAX_FILES - state.items.length;
+      if (remainingSlots <= 0) {
+        showToast("You can process up to 10 images at a time.", "error");
         return;
       }
 
-      resetResult();
-      if (state.originalUrl) URL.revokeObjectURL(state.originalUrl);
-      state.file = file;
-      state.originalUrl = URL.createObjectURL(file);
-      els.fileInput.value = "";
-
-      els.uploadBox.classList.remove("empty");
-      els.uploadBox.classList.add("ready");
-      els.emptyState.classList.add("hidden");
-      els.readyState.classList.remove("hidden");
-      els.fileName.textContent = file.name;
-      els.originalSizePill.textContent = formatBytes(file.size);
-      els.originalFormatPill.textContent = getFormatLabel(file);
-      els.compressButton.disabled = false;
-      renderPreview(els.beforePreview, state.originalUrl, "Original image preview");
-    }
-
-    function clearFile(keepError) {
-      resetResult(Boolean(keepError));
-      if (state.originalUrl) URL.revokeObjectURL(state.originalUrl);
-      state.file = null;
-      state.originalUrl = null;
-      els.fileInput.value = "";
-      els.uploadBox.classList.add("empty");
-      els.uploadBox.classList.remove("ready");
-      els.emptyState.classList.remove("hidden");
-      els.readyState.classList.add("hidden");
-      els.fileName.textContent = "";
-      els.originalSizePill.textContent = "Not selected";
-      els.originalFormatPill.textContent = "None";
-      els.compressButton.disabled = true;
-      renderPreview(els.beforePreview, null, "Original image preview");
-    }
-
-    function resetResult(keepError) {
-      if (state.result && state.result.previewUrl) URL.revokeObjectURL(state.result.previewUrl);
-      state.result = null;
-      state.isDownloadFeedbackActive = false;
-      clearTimeout(state.downloadFeedbackTimer);
-      els.resultCard.classList.add("hidden");
-      els.progressBox.classList.add("hidden");
-      els.progressFill.style.width = "0%";
-      els.progressPercent.textContent = "0%";
-      els.statusText.textContent = "";
-      els.downloadButton.disabled = false;
-      els.downloadText.textContent = "Download 20KB Image";
-      els.downloadIcon.innerHTML = '<svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 20h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-      renderPreview(els.afterPreview, null, "Compressed image preview");
-      if (!keepError) hideError();
-    }
-
-    async function handleCompress() {
-      if (!state.file || state.isCompressing) {
-        if (!state.file) showError("Choose an image first.");
-        return;
+      const acceptedFiles = files.slice(0, remainingSlots);
+      if (files.length > remainingSlots) {
+        showToast("Only the first 10 images are added.", "error");
       }
+
+      acceptedFiles.forEach((file) => {
+        const item = {
+          id: createId(),
+          file,
+          originalBytes: file.size,
+          compressedBytes: null,
+          status: "Waiting",
+          error: "",
+          result: null
+        };
+
+        if (!isSupportedImage(file)) {
+          item.status = "Failed";
+          item.error = "Please upload JPG, PNG, or WebP images only.";
+        } else if (file.size > MAX_UPLOAD_BYTES) {
+          item.status = "Failed";
+          item.error = "File is too large. Max size is 10MB.";
+        }
+
+        state.items.push(item);
+      });
+
+      renderQueue();
+      updateControls();
+    }
+
+    function clearAll() {
+      if (state.isCompressing) return;
+      state.items.forEach((item) => {
+        if (item.result && item.result.url) URL.revokeObjectURL(item.result.url);
+      });
+      state.items = [];
+      hideError();
+      hideProgress();
+      renderQueue();
+      updateControls();
+    }
+
+    async function compressAll() {
+      const queue = state.items.filter((item) => item.status === "Waiting");
+      if (!queue.length || state.isCompressing) return;
 
       state.isCompressing = true;
       hideError();
-      resetResult();
-      setProgress(2, "Starting local compression");
-      els.progressBox.classList.remove("hidden");
       els.compressButton.disabled = true;
+      els.clearButton.disabled = true;
       els.compressIcon.innerHTML = '<span class="spinner"></span>';
       els.compressText.textContent = "Compressing";
+      setProgress(0, "Starting compression");
 
-      try {
-        const outcome = await compressImageToTarget(state.file, FIXED_TARGET_KB, setProgress);
-        const verifiedCompressedBytes = outcome.blob.size;
+      for (let index = 0; index < queue.length; index += 1) {
+        const item = queue[index];
+        item.status = "Compressing";
+        item.error = "";
+        item.compressedBytes = null;
+        item.result = null;
+        renderQueue();
+        updateControls();
 
-        if (!isWithinMaxSize(verifiedCompressedBytes)) {
-          throw new Error(UNDER_20KB_ERROR);
+        try {
+          const outcome = await compressImageToTarget(item.file, FIXED_TARGET_KB, (progress, message) => {
+            const overall = ((index + progress / 100) / queue.length) * 100;
+            setProgress(overall, (index + 1) + "/" + queue.length + " · " + item.file.name + " · " + message);
+          });
+
+          const realSize = outcome.blob.size;
+          if (!isWithinMaxSize(realSize)) {
+            throw new Error(UNDER_20KB_ERROR);
+          }
+
+          item.status = "Success";
+          item.compressedBytes = realSize;
+          item.result = {
+            blob: outcome.blob,
+            url: URL.createObjectURL(outcome.blob),
+            fileName: buildOutputFileName(item.file.name, outcome.extension),
+            extension: outcome.extension,
+            formatLabel: outcome.formatLabel
+          };
+        } catch (error) {
+          item.status = "Failed";
+          item.compressedBytes = null;
+          item.result = null;
+          item.error = getFriendlyError(error);
         }
 
-        state.result = {
-          ...outcome,
-          compressedBytes: verifiedCompressedBytes,
-          previewUrl: URL.createObjectURL(outcome.blob)
-        };
+        renderQueue();
+        updateControls();
+      }
 
-        renderResult();
-      } catch (error) {
-        showError(error instanceof Error && error.message === UNDER_20KB_ERROR ? error.message : UNDER_20KB_ERROR);
-        els.progressBox.classList.add("hidden");
-      } finally {
-        state.isCompressing = false;
-        els.compressButton.disabled = !state.file;
-        els.compressIcon.innerHTML = '<svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.7 5.1L19 10l-5.3 1.9L12 17l-1.7-5.1L5 10l5.3-1.9L12 3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
-        els.compressText.textContent = "Compress Image to 20KB or Less";
+      state.isCompressing = false;
+      hideProgress();
+      els.compressIcon.innerHTML = '<svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.7 5.1L19 10l-5.3 1.9L12 17l-1.7-5.1L5 10l5.3-1.9L12 3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
+      els.compressText.textContent = "Compress Images to 20KB or Less";
+      updateControls();
+
+      const successCount = getSuccessfulItems().length;
+      if (successCount > 0) {
+        showToast(successCount + " image" + (successCount === 1 ? "" : "s") + " compressed to under 20KB.", "success");
+      } else {
+        showToast("No images could be compressed under 20KB.", "error");
       }
     }
 
-    function renderResult() {
-      const result = state.result;
-      if (!result) return;
+    function renderQueue() {
+      if (!state.items.length) {
+        els.batchList.innerHTML = '<div class="batch-empty">No images selected yet.</div>';
+        return;
+      }
 
-      els.progressBox.classList.add("hidden");
-      renderPreview(els.afterPreview, result.previewUrl, "Compressed image preview");
-      els.resultOriginalSize.textContent = formatBytes(result.originalBytes);
-      els.resultCompressedSize.textContent = formatBytes(result.compressedBytes);
-      els.resultSaved.textContent = getSavedPercentage(result.originalBytes, result.compressedBytes).toFixed(1) + "%";
-      els.resultFormat.textContent = result.formatLabel;
-      els.resultCard.classList.remove("hidden");
+      els.batchList.innerHTML = state.items.map((item) => {
+        const canDownload = item.status === "Success" && item.result && isWithinMaxSize(item.result.blob.size);
+        const successLine = item.status === "Success" ? '<p class="file-success">Compressed to under 20KB</p>' : "";
+        const errorLine = item.status === "Failed" && item.error ? '<p class="file-error">' + escapeHtml(item.error) + '</p>' : "";
+        const compressedValue = item.compressedBytes === null ? "-" : formatBytes(item.compressedBytes);
+        const action = canDownload
+          ? '<button class="row-button" type="button" data-download-id="' + escapeHtml(item.id) + '">Download</button>'
+          : "";
+
+        return (
+          '<article class="file-row">' +
+            '<div class="file-main">' +
+              '<p class="file-title">' + escapeHtml(item.file.name) + '</p>' +
+              successLine +
+              errorLine +
+            '</div>' +
+            '<div class="file-metric"><p class="label">Original size</p><p class="value">' + formatBytes(item.originalBytes) + '</p></div>' +
+            '<div class="file-metric"><p class="label">Compressed size</p><p class="value">' + compressedValue + '</p></div>' +
+            '<div class="file-metric"><p class="label">Status</p><p class="value"><span class="status-badge status-' + item.status.toLowerCase() + '">' + item.status + '</span></p></div>' +
+            '<div class="file-actions">' + action + '</div>' +
+          '</article>'
+        );
+      }).join("");
+
+      els.batchList.querySelectorAll("[data-download-id]").forEach((button) => {
+        button.addEventListener("click", () => downloadSingle(button.dataset.downloadId));
+      });
     }
 
-    function handleDownload() {
-      const result = state.result;
-      if (!result || state.isDownloadFeedbackActive) return;
+    function updateControls() {
+      const total = state.items.length;
+      const waiting = state.items.filter((item) => item.status === "Waiting").length;
+      const success = getSuccessfulItems().length;
+      const failed = state.items.filter((item) => item.status === "Failed").length;
 
-      if (!isWithinMaxSize(result.blob.size) || !isWithinMaxSize(result.compressedBytes)) {
-        resetResult();
-        showError(UNDER_20KB_ERROR);
+      els.compressButton.disabled = state.isCompressing || waiting === 0;
+      els.clearButton.disabled = state.isCompressing || total === 0;
+      els.downloadZipButton.classList.toggle("hidden", success === 0);
+      els.downloadZipButton.disabled = state.isCompressing || success === 0;
+      els.queueSummary.innerHTML = "<strong>Target:</strong> 20KB max · " + total + "/" + MAX_FILES + " images · " + success + " success · " + failed + " failed";
+    }
+
+    function downloadSingle(id) {
+      const item = state.items.find((entry) => entry.id === id);
+      if (!item || item.status !== "Success" || !item.result || !isWithinMaxSize(item.result.blob.size)) {
         showToast("Download failed. Please try again.", "error");
         return;
       }
 
-      state.isDownloadFeedbackActive = true;
-      els.downloadButton.disabled = true;
+      downloadBlob(item.result.blob, item.result.fileName);
+      showToast("Your compressed image has been downloaded.", "success");
+    }
 
-      try {
-        const link = document.createElement("a");
-        link.href = result.previewUrl;
-        link.download = "compressed-image-20kb." + result.extension;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        els.downloadText.textContent = "Downloaded!";
-        els.downloadIcon.innerHTML = '<svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-        showToast("Your compressed image has been downloaded.", "success");
-      } catch {
-        showToast("Download failed. Please try again.", "error");
+    async function downloadZip() {
+      const successfulItems = getSuccessfulItems();
+      if (!successfulItems.length) return;
+
+      if (typeof JSZip === "undefined") {
+        showError("ZIP download is unavailable. Please check your internet connection and try again.");
+        return;
       }
 
-      state.downloadFeedbackTimer = setTimeout(() => {
-        state.isDownloadFeedbackActive = false;
-        els.downloadButton.disabled = false;
-        els.downloadText.textContent = "Download 20KB Image";
-        els.downloadIcon.innerHTML = '<svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 20h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-      }, 2000);
+      try {
+        els.downloadZipButton.disabled = true;
+        els.downloadZipButton.textContent = "Preparing ZIP";
+        const zip = new JSZip();
+        const usedNames = new Set();
+
+        successfulItems.forEach((item) => {
+          zip.file(getUniqueZipName(item.result.fileName, usedNames), item.result.blob);
+        });
+
+        const zipBlob = await zip.generateAsync({ type: "blob" });
+        downloadBlob(zipBlob, "compressed-images-20kb.zip");
+        showToast("Your compressed images have been downloaded.", "success");
+      } catch {
+        showToast("Download failed. Please try again.", "error");
+      } finally {
+        els.downloadZipButton.disabled = false;
+        els.downloadZipButton.innerHTML = '<span aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 20h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Download All as ZIP';
+        updateControls();
+      }
     }
 
     async function compressImageToTarget(file, targetKb, onProgress) {
       if (!isSupportedImage(file)) {
-        throw new Error("Please upload a JPG, PNG, or WebP image.");
+        throw new Error("Please upload JPG, PNG, or WebP images only.");
       }
 
-      const hardMaxBytes = Math.min(MAX_SIZE_BYTES, Math.round(targetKb * 1000));
-      const targetBytes = Math.min(SAFE_TARGET_BYTES, hardMaxBytes - 1);
-      onProgress(4, "Reading your image locally");
+      if (file.size > MAX_UPLOAD_BYTES) {
+        throw new Error("File is too large. Max size is 10MB.");
+      }
+
+      const hardMaxBytes = Math.min(MAX_SIZE_BYTES, Math.round(targetKb * 1024));
+      const targetBytes = Math.min(SAFE_TARGET_BYTES, hardMaxBytes);
+      onProgress(3, "Reading image locally");
       const image = await loadImage(file);
 
       try {
-        if (file.size <= targetBytes) {
-          onProgress(100, "Your image is already under 20KB");
+        if (file.size <= hardMaxBytes) {
+          onProgress(100, "Already under 20KB");
           const mimeType = normalizedMime(file);
           return {
             blob: file,
@@ -1810,71 +1968,49 @@
           };
         }
 
-        const outputMime = chooseOutputMime(file);
-        let scale = 1;
-        const totalRounds = MAX_RESIZE_ROUNDS * QUALITY_SEARCH_ROUNDS;
+        const outputMimeTypes = getOutputMimeTypes(file);
+        const totalRounds = outputMimeTypes.length * MAX_RESIZE_ROUNDS * QUALITY_SEARCH_ROUNDS;
         let completedRounds = 0;
 
-        for (let resizeRound = 0; resizeRound < MAX_RESIZE_ROUNDS; resizeRound += 1) {
-          let low = MIN_ACCEPTABLE_QUALITY;
-          let high = MAX_QUALITY;
-          let bestForScale = null;
+        for (const outputMime of outputMimeTypes) {
+          let scale = 1;
 
-          for (let qualityRound = 0; qualityRound < QUALITY_SEARCH_ROUNDS; qualityRound += 1) {
-            const quality = (low + high) / 2;
-            const candidate = await renderCandidate(image, outputMime, quality, scale);
+          for (let resizeRound = 0; resizeRound < MAX_RESIZE_ROUNDS; resizeRound += 1) {
+            let low = MIN_ACCEPTABLE_QUALITY;
+            let high = MAX_QUALITY;
+            let bestForScale = null;
 
-            completedRounds += 1;
-            const progress = Math.min(96, 8 + Math.round((completedRounds / totalRounds) * 88));
-            onProgress(progress, "Trying to stay under 20KB");
+            for (let qualityRound = 0; qualityRound < QUALITY_SEARCH_ROUNDS; qualityRound += 1) {
+              const quality = (low + high) / 2;
+              const candidate = await renderCandidate(image, outputMime, quality, scale);
+              completedRounds += 1;
+              const progress = Math.min(96, 8 + Math.round((completedRounds / totalRounds) * 88));
+              onProgress(progress, "Trying quality and size");
 
-            if (candidate.blob.size <= targetBytes) {
-              bestForScale = candidate;
-              low = quality;
-            } else {
-              high = quality;
+              if (candidate.blob.size <= targetBytes) {
+                bestForScale = candidate;
+                low = quality;
+              } else {
+                high = quality;
+              }
             }
-          }
 
-          if (bestForScale && isStrictlyUnderMaxSize(bestForScale.blob.size)) {
-            onProgress(100, "Compression complete");
-            return {
-              blob: bestForScale.blob,
-              originalBytes: file.size,
-              compressedBytes: bestForScale.blob.size,
-              targetBytes: hardMaxBytes,
-              mimeType: bestForScale.blob.type || outputMime,
-              formatLabel: formatLabelForMime(bestForScale.blob.type || outputMime),
-              extension: extensionForMime(bestForScale.blob.type || outputMime),
-              width: bestForScale.width,
-              height: bestForScale.height,
-              quality: bestForScale.quality,
-              scale: bestForScale.scale
-            };
-          }
+            if (bestForScale && isWithinMaxSize(bestForScale.blob.size)) {
+              onProgress(100, "Compression complete");
+              return buildCompressionResult(file, bestForScale, outputMime, hardMaxBytes);
+            }
 
-          const nextLongEdge = Math.max(image.width, image.height) * scale * RESIZE_STEP;
-          if (nextLongEdge < MIN_LONG_EDGE) break;
-          scale *= RESIZE_STEP;
+            const nextLongEdge = Math.max(image.width, image.height) * scale * RESIZE_STEP;
+            if (nextLongEdge < MIN_LONG_EDGE) break;
+            scale *= RESIZE_STEP;
+          }
         }
 
-        onProgress(98, "Forcing the file under 20KB");
-        const emergencyCandidate = await forceUnder20KB(image, outputMime, targetBytes);
-        if (emergencyCandidate && isStrictlyUnderMaxSize(emergencyCandidate.blob.size)) {
+        onProgress(98, "Forcing under 20KB");
+        const emergencyCandidate = await forceUnder20KB(image, outputMimeTypes, hardMaxBytes);
+        if (emergencyCandidate && isWithinMaxSize(emergencyCandidate.blob.size)) {
           onProgress(100, "Compression complete");
-          return {
-            blob: emergencyCandidate.blob,
-            originalBytes: file.size,
-            compressedBytes: emergencyCandidate.blob.size,
-            targetBytes: hardMaxBytes,
-            mimeType: emergencyCandidate.blob.type || outputMime,
-            formatLabel: formatLabelForMime(emergencyCandidate.blob.type || outputMime),
-            extension: extensionForMime(emergencyCandidate.blob.type || outputMime),
-            width: emergencyCandidate.width,
-            height: emergencyCandidate.height,
-            quality: emergencyCandidate.quality,
-            scale: emergencyCandidate.scale
-          };
+          return buildCompressionResult(file, emergencyCandidate, emergencyCandidate.mimeType, hardMaxBytes);
         }
 
         throw new Error(UNDER_20KB_ERROR);
@@ -1894,7 +2030,7 @@
             close: () => bitmap.close()
           };
         } catch {
-          // Use HTMLImageElement fallback below.
+          // Fall back to an HTML image when ImageBitmap cannot read the file.
         }
       }
 
@@ -1947,16 +2083,15 @@
 
       context.drawImage(image.source, 0, 0, width, height);
       const blob = await canvasToBlob(canvas, mimeType, quality);
-
-      return { blob, width, height, quality, scale };
+      return { blob, width, height, quality, scale, mimeType };
     }
 
-    async function forceUnder20KB(image, preferredMimeType, limitBytes) {
+    async function forceUnder20KB(image, outputMimeTypes, limitBytes) {
       const maxLongEdge = Math.max(image.width, image.height);
-      const mimeTypes = [...new Set([preferredMimeType, "image/jpeg"])];
+      const mimeTypes = [...new Set([...outputMimeTypes, "image/jpeg"])];
 
       for (const mimeType of mimeTypes) {
-        for (let longEdge = Math.min(maxLongEdge, 240); longEdge >= EMERGENCY_MIN_LONG_EDGE; longEdge = Math.floor(longEdge * 0.72)) {
+        for (let longEdge = Math.min(maxLongEdge, 280); longEdge >= EMERGENCY_MIN_LONG_EDGE; longEdge = Math.floor(longEdge * 0.72)) {
           const scale = Math.max(EMERGENCY_MIN_LONG_EDGE / maxLongEdge, longEdge / maxLongEdge);
 
           for (const quality of EMERGENCY_QUALITIES) {
@@ -1983,11 +2118,12 @@
       });
     }
 
-    function chooseOutputMime(file) {
+    function getOutputMimeTypes(file) {
       const sourceMime = normalizedMime(file);
-      const preferred = sourceMime === "image/webp" || sourceMime === "image/png" ? "image/webp" : "image/jpeg";
-      if (canvasSupportsMime(preferred)) return preferred;
-      return "image/jpeg";
+      if (sourceMime === "image/webp" && canvasSupportsMime("image/webp")) {
+        return ["image/webp", "image/jpeg"];
+      }
+      return ["image/jpeg"];
     }
 
     function canvasSupportsMime(mimeType) {
@@ -1996,6 +2132,86 @@
       canvas.width = 1;
       canvas.height = 1;
       return canvas.toDataURL(mimeType).startsWith("data:" + mimeType);
+    }
+
+    function buildCompressionResult(file, candidate, fallbackMimeType, targetBytes) {
+      const mimeType = candidate.blob.type || fallbackMimeType;
+      return {
+        blob: candidate.blob,
+        originalBytes: file.size,
+        compressedBytes: candidate.blob.size,
+        targetBytes,
+        mimeType,
+        formatLabel: formatLabelForMime(mimeType),
+        extension: extensionForMime(mimeType),
+        width: candidate.width,
+        height: candidate.height,
+        quality: candidate.quality,
+        scale: candidate.scale
+      };
+    }
+
+    function getSuccessfulItems() {
+      return state.items.filter((item) => (
+        item.status === "Success" &&
+        item.result &&
+        item.compressedBytes !== null &&
+        isWithinMaxSize(item.compressedBytes) &&
+        isWithinMaxSize(item.result.blob.size)
+      ));
+    }
+
+    function downloadBlob(blob, fileName) {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    function buildOutputFileName(originalName, extension) {
+      const cleanName = originalName.split(/[\\/]/).pop() || "image";
+      const dotIndex = cleanName.lastIndexOf(".");
+      const base = dotIndex > 0 ? cleanName.slice(0, dotIndex) : cleanName;
+      return base + "-20kb." + extension;
+    }
+
+    function getUniqueZipName(fileName, usedNames) {
+      if (!usedNames.has(fileName)) {
+        usedNames.add(fileName);
+        return fileName;
+      }
+
+      const dotIndex = fileName.lastIndexOf(".");
+      const base = dotIndex > 0 ? fileName.slice(0, dotIndex) : fileName;
+      const extension = dotIndex > 0 ? fileName.slice(dotIndex) : "";
+      let index = 2;
+      let nextName = base + "-" + index + extension;
+      while (usedNames.has(nextName)) {
+        index += 1;
+        nextName = base + "-" + index + extension;
+      }
+      usedNames.add(nextName);
+      return nextName;
+    }
+
+    function getFriendlyError(error) {
+      if (error instanceof Error && error.message) {
+        if (error.message === UNDER_20KB_ERROR) return UNDER_20KB_ERROR;
+        if (error.message.includes("10MB")) return error.message;
+        if (error.message.includes("JPG") || error.message.includes("WebP")) return error.message;
+      }
+      return UNDER_20KB_ERROR;
+    }
+
+    function createId() {
+      if (window.crypto && typeof window.crypto.randomUUID === "function") {
+        return window.crypto.randomUUID();
+      }
+      return "image-" + Date.now() + "-" + Math.random().toString(16).slice(2);
     }
 
     function isSupportedImage(file) {
@@ -2009,7 +2225,7 @@
 
     function normalizedMime(file) {
       if (file.type === "image/jpg") return "image/jpeg";
-      if (file.type) return file.type;
+      if (file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/webp") return file.type;
       const lowerName = file.name.toLowerCase();
       if (lowerName.endsWith(".webp")) return "image/webp";
       if (lowerName.endsWith(".png")) return "image/png";
@@ -2019,7 +2235,7 @@
     function formatLabelForMime(mimeType) {
       if (mimeType === "image/webp") return "WebP";
       if (mimeType === "image/png") return "PNG";
-      return "JPEG";
+      return "JPG";
     }
 
     function extensionForMime(mimeType) {
@@ -2028,30 +2244,15 @@
       return "jpg";
     }
 
-    function getFormatLabel(file) {
-      if (file.type === "image/webp") return "WebP";
-      if (file.type === "image/png") return "PNG";
-      return "JPG";
-    }
-
     function formatBytes(bytes) {
-      if (bytes < 1000) return bytes + " B";
-      const kb = bytes / 1000;
-      if (kb < 1000) return (kb >= 100 ? kb.toFixed(0) : kb.toFixed(1)) + " KB";
-      return (kb / 1000).toFixed(2) + " MB";
-    }
-
-    function getSavedPercentage(originalBytes, compressedBytes) {
-      if (!originalBytes) return 0;
-      return Math.max(0, (1 - compressedBytes / originalBytes) * 100);
+      if (bytes < 1024) return bytes + " B";
+      const kb = bytes / 1024;
+      if (kb < 1024) return (kb >= 100 ? kb.toFixed(0) : kb.toFixed(1)) + " KB";
+      return (kb / 1024).toFixed(2) + " MB";
     }
 
     function isWithinMaxSize(bytes) {
-      return bytes < MAX_SIZE_BYTES;
-    }
-
-    function isStrictlyUnderMaxSize(bytes) {
-      return bytes < MAX_SIZE_BYTES;
+      return bytes <= MAX_SIZE_BYTES;
     }
 
     function setProgress(progress, message) {
@@ -2062,16 +2263,11 @@
       els.statusText.textContent = message;
     }
 
-    function renderPreview(container, url, placeholder) {
-      container.innerHTML = "";
-      if (url) {
-        const image = document.createElement("img");
-        image.src = url;
-        image.alt = placeholder;
-        container.appendChild(image);
-      } else {
-        container.textContent = placeholder;
-      }
+    function hideProgress() {
+      els.progressBox.classList.add("hidden");
+      els.progressFill.style.width = "0%";
+      els.progressPercent.textContent = "0%";
+      els.statusText.textContent = "";
     }
 
     function showError(message) {
@@ -2092,6 +2288,18 @@
         els.toast.className = "toast" + (type === "error" ? " error" : "");
       }, 2000);
     }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    renderQueue();
+    updateControls();
   </script>
 </body>
 </html>
