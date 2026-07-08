@@ -129,10 +129,10 @@
       --violet: #7c63ff;
       --cyan: #48d9ff;
       --green: #39b86f;
-      --card: rgba(255, 255, 255, 0.78);
-      --line: rgba(255, 255, 255, 0.72);
-      --shadow: 0 28px 90px rgba(88, 65, 135, 0.18);
-      --soft-shadow: 0 16px 40px rgba(80, 65, 130, 0.12);
+      --card: rgba(255, 255, 255, 0.9);
+      --line: rgba(212, 218, 232, 0.78);
+      --shadow: 0 18px 52px rgba(88, 65, 135, 0.12);
+      --soft-shadow: 0 10px 26px rgba(80, 65, 130, 0.08);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: var(--ink);
       background: #fff8fb;
@@ -151,10 +151,10 @@
       min-height: 100vh;
       color: var(--ink);
       background:
-        radial-gradient(circle at 12% 12%, rgba(255, 201, 95, 0.28), transparent 26rem),
-        radial-gradient(circle at 82% 6%, rgba(72, 217, 255, 0.24), transparent 28rem),
-        radial-gradient(circle at 72% 45%, rgba(240, 78, 152, 0.16), transparent 32rem),
-        linear-gradient(135deg, #fff9d7 0%, #f6f1ff 34%, #dcf9ff 68%, #fff4fb 100%);
+        radial-gradient(circle at 16% 12%, rgba(255, 201, 95, 0.18), transparent 24rem),
+        radial-gradient(circle at 86% 8%, rgba(72, 217, 255, 0.16), transparent 26rem),
+        radial-gradient(circle at 78% 42%, rgba(240, 78, 152, 0.1), transparent 30rem),
+        linear-gradient(135deg, #fffcf0 0%, #f8f5ff 42%, #effcff 100%);
       overflow-x: hidden;
     }
 
@@ -164,9 +164,9 @@
       inset: 0;
       pointer-events: none;
       background-image:
-        linear-gradient(rgba(36, 27, 75, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(36, 27, 75, 0.035) 1px, transparent 1px);
-      background-size: 44px 44px;
+        linear-gradient(rgba(36, 27, 75, 0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(36, 27, 75, 0.018) 1px, transparent 1px);
+      background-size: 56px 56px;
       mask-image: linear-gradient(to bottom, black, transparent 70%);
     }
 
@@ -206,7 +206,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      padding: 20px 0 12px;
+      padding: 18px 0 10px;
     }
 
     .brand {
@@ -222,7 +222,7 @@
       width: 38px;
       height: 38px;
       place-items: center;
-      border-radius: 15px;
+      border-radius: 12px;
       color: white;
       background: var(--ink);
       box-shadow: var(--soft-shadow);
@@ -245,10 +245,10 @@
       position: relative;
       z-index: 2;
       display: grid;
-      grid-template-columns: minmax(0, 0.88fr) minmax(420px, 1.12fr);
-      gap: 42px;
+      grid-template-columns: minmax(0, 0.82fr) minmax(460px, 1.18fr);
+      gap: 38px;
       align-items: center;
-      padding: 34px 0 54px;
+      padding: 30px 0 52px;
     }
 
     .tag {
@@ -258,22 +258,22 @@
       border: 1px solid rgba(255, 255, 255, 0.82);
       border-radius: 999px;
       background: rgba(255, 255, 255, 0.72);
-      box-shadow: 0 10px 24px rgba(80, 65, 130, 0.08);
+      box-shadow: none;
       backdrop-filter: blur(16px);
-      padding: 9px 14px;
+      padding: 8px 13px;
       color: #5d3a8c;
       font-size: 0.92rem;
-      font-weight: 900;
+      font-weight: 820;
     }
 
     .h1 {
       margin: 18px 0 0;
       max-width: 720px;
       color: var(--ink);
-      font-size: clamp(2.65rem, 7vw, 5.1rem);
-      line-height: 1.06;
+      font-size: clamp(2.55rem, 6.4vw, 4.75rem);
+      line-height: 1.08;
       letter-spacing: 0;
-      font-weight: 900;
+      font-weight: 850;
     }
 
     .gradient-text {
@@ -306,11 +306,11 @@
       border: 1px solid var(--line);
       border-radius: 18px;
       background: rgba(255, 255, 255, 0.7);
-      box-shadow: 0 12px 30px rgba(80, 65, 130, 0.08);
+      box-shadow: none;
       backdrop-filter: blur(14px);
-      padding: 11px 12px;
+      padding: 10px 12px;
       color: #536070;
-      font-weight: 850;
+      font-weight: 780;
     }
 
     .pill svg {
@@ -321,49 +321,49 @@
     .tool-card {
       position: relative;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.72);
-      border-radius: 30px;
-      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.92);
       box-shadow: var(--shadow);
-      backdrop-filter: blur(24px);
-      padding: 20px;
+      backdrop-filter: blur(18px);
+      padding: 24px;
     }
 
     .tool-card::before {
       content: "";
       position: absolute;
       inset: 0 0 auto;
-      height: 7px;
-      background: linear-gradient(90deg, #ff6fb1, #ffc95f, #82ec7a, #48d9ff, #9d7bff);
+      height: 3px;
+      background: linear-gradient(90deg, #ff6fb1, #ffc95f, #48d9ff, #9d7bff);
     }
 
     .tool-head {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      gap: 14px;
-      padding-top: 10px;
-      margin-bottom: 16px;
+      gap: 16px;
+      padding-top: 6px;
+      margin-bottom: 18px;
     }
 
     .tool-eyebrow {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       margin: 0;
       color: #8f4cc5;
-      font-size: 0.78rem;
-      font-weight: 900;
-      letter-spacing: 0.12em;
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
     }
 
     .tool-title {
-      margin: 6px 0 0;
-      font-size: clamp(1.45rem, 3vw, 2rem);
-      line-height: 1.16;
+      margin: 5px 0 0;
+      font-size: clamp(1.45rem, 2.8vw, 1.95rem);
+      line-height: 1.2;
       letter-spacing: 0;
-      font-weight: 900;
+      font-weight: 820;
     }
 
     .browser-only {
@@ -371,20 +371,20 @@
       align-items: center;
       gap: 7px;
       border: 1px solid rgba(16, 185, 129, 0.24);
-      border-radius: 999px;
-      background: rgba(236, 253, 245, 0.9);
-      padding: 8px 11px;
+      border-radius: 12px;
+      background: rgba(236, 253, 245, 0.68);
+      padding: 7px 10px;
       color: #087447;
-      font-size: 0.88rem;
-      font-weight: 900;
+      font-size: 0.84rem;
+      font-weight: 800;
       white-space: nowrap;
     }
 
     .upload {
-      border: 1px dashed #8edff1;
-      border-radius: 25px;
-      background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(255,246,184,0.48), rgba(207,246,255,0.58));
-      padding: 16px;
+      border: 1px dashed #b7c7de;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(255,248,219,0.38), rgba(230,250,255,0.5));
+      padding: 18px;
       transition: 180ms ease;
     }
 
@@ -394,7 +394,7 @@
 
     .upload.dragging {
       border-color: var(--pink);
-      background: rgba(255, 241, 247, 0.94);
+      background: rgba(255, 247, 251, 0.94);
       transform: translateY(-1px);
     }
 
@@ -405,7 +405,7 @@
 
     .drop-empty {
       display: flex;
-      min-height: 150px;
+      min-height: 166px;
       flex-direction: column;
       align-items: center;
       justify-content: center;
@@ -414,29 +414,29 @@
 
     .upload-icon {
       display: grid;
-      width: 58px;
-      height: 58px;
+      width: 56px;
+      height: 56px;
       place-items: center;
       margin-bottom: 12px;
-      border-radius: 19px;
+      border-radius: 16px;
       background: white;
       color: #d84898;
-      box-shadow: var(--soft-shadow);
+      box-shadow: 0 8px 20px rgba(216, 72, 152, 0.1);
     }
 
     .drop-title {
       margin: 0;
-      font-size: 1.12rem;
-      font-weight: 900;
+      font-size: 1.18rem;
+      font-weight: 820;
     }
 
     .drop-help {
       max-width: 390px;
       margin: 8px auto 0;
       color: #637083;
-      font-size: 0.94rem;
+      font-size: 0.96rem;
       line-height: 1.6;
-      font-weight: 750;
+      font-weight: 650;
     }
 
     .ready-row {
@@ -539,13 +539,13 @@
 
     .target-note {
       border: 1px solid var(--line);
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.7);
-      box-shadow: 0 8px 20px rgba(80, 65, 130, 0.06);
-      padding: 13px 14px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.68);
+      box-shadow: none;
+      padding: 12px 13px;
       color: #5f6878;
       font-size: 0.92rem;
-      font-weight: 900;
+      font-weight: 780;
     }
 
     .target-note strong {
@@ -558,19 +558,22 @@
       align-items: center;
       justify-content: center;
       gap: 9px;
-      min-height: 50px;
-      border-radius: 18px;
-      padding: 13px 18px;
+      min-height: 52px;
+      border-radius: 14px;
+      padding: 14px 20px;
       cursor: pointer;
-      font-weight: 950;
+      font-weight: 860;
       transition: 180ms ease;
       white-space: nowrap;
     }
 
     .primary-button {
       color: white;
-      background: linear-gradient(90deg, var(--pink), var(--orange), var(--violet));
-      box-shadow: 0 16px 34px rgba(155, 92, 246, 0.32);
+      min-width: 190px;
+      min-height: 66px;
+      background: linear-gradient(90deg, #ee5ba4, #ff9b51 52%, #7c63ff);
+      box-shadow: 0 14px 28px rgba(155, 92, 246, 0.24);
+      font-size: 1.22rem;
     }
 
     .primary-button:hover:not(:disabled),
@@ -709,7 +712,7 @@
     .download-button {
       color: white;
       background: var(--ink);
-      box-shadow: 0 12px 28px rgba(36, 27, 75, 0.22);
+      box-shadow: 0 10px 22px rgba(36, 27, 75, 0.16);
     }
 
     .download-button:hover:not(:disabled) {
@@ -747,37 +750,37 @@
     }
 
     .section {
-      padding: 44px 0;
+      padding: 32px 0;
     }
 
     .section-head {
       max-width: 760px;
-      margin-bottom: 24px;
+      margin-bottom: 18px;
     }
 
     .eyebrow {
       margin: 0;
       color: #d84898;
-      font-size: 0.82rem;
-      font-weight: 950;
-      letter-spacing: 0.14em;
+      font-size: 0.7rem;
+      font-weight: 820;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 
     .section h2 {
-      margin: 12px 0 0;
+      margin: 9px 0 0;
       color: var(--ink);
-      font-size: clamp(2rem, 4.6vw, 2.75rem);
-      line-height: 1.15;
+      font-size: clamp(1.38rem, 2.6vw, 1.82rem);
+      line-height: 1.24;
       letter-spacing: 0;
-      font-weight: 950;
+      font-weight: 850;
     }
 
     .section-desc {
       margin: 12px 0 0;
       color: var(--muted);
-      font-size: 1.05rem;
-      line-height: 1.7;
+      font-size: 0.92rem;
+      line-height: 1.62;
     }
 
     .use-grid {
@@ -790,49 +793,49 @@
     .step-card,
     .faq details,
     .copy-card {
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.76);
-      box-shadow: 0 12px 30px rgba(80, 65, 130, 0.08);
-      backdrop-filter: blur(16px);
+      border: 1px solid rgba(226, 232, 240, 0.92);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: none;
+      backdrop-filter: blur(10px);
     }
 
     .use-card {
-      min-height: 205px;
-      padding: 22px;
+      min-height: 166px;
+      padding: 18px;
       transition: 180ms ease;
     }
 
     .use-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--soft-shadow);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(80, 65, 130, 0.06);
     }
 
-    .use-card.p1 { background: linear-gradient(135deg, #fff1f7, #fff7ed); }
-    .use-card.p2 { background: linear-gradient(135deg, #eff6ff, #ecfeff); }
-    .use-card.p3 { background: linear-gradient(135deg, #ecfdf5, #f0fdfa); }
-    .use-card.p4 { background: linear-gradient(135deg, #fffbeb, #fefce8); }
-    .use-card.p5 { background: linear-gradient(135deg, #f5f3ff, #fdf4ff); }
-    .use-card.p6 { background: linear-gradient(135deg, #f7fee7, #f0fdf4); }
+    .use-card.p1 { background: linear-gradient(135deg, rgba(255,241,247,0.68), rgba(255,247,237,0.68)); }
+    .use-card.p2 { background: linear-gradient(135deg, rgba(239,246,255,0.68), rgba(236,254,255,0.68)); }
+    .use-card.p3 { background: linear-gradient(135deg, rgba(236,253,245,0.68), rgba(240,253,250,0.68)); }
+    .use-card.p4 { background: linear-gradient(135deg, rgba(255,251,235,0.72), rgba(254,252,232,0.72)); }
+    .use-card.p5 { background: linear-gradient(135deg, rgba(245,243,255,0.72), rgba(253,244,255,0.72)); }
+    .use-card.p6 { background: linear-gradient(135deg, rgba(247,254,231,0.68), rgba(240,253,244,0.68)); }
 
     .use-icon {
       display: grid;
-      width: 50px;
-      height: 50px;
+      width: 44px;
+      height: 44px;
       place-items: center;
-      border-radius: 18px;
+      border-radius: 12px;
       background: rgba(255, 255, 255, 0.82);
-      box-shadow: 0 10px 22px rgba(80, 65, 130, 0.08);
+      box-shadow: none;
       color: var(--ink);
       font-weight: 950;
     }
 
     .use-card h3,
     .step-card h3 {
-      margin: 16px 0 0;
-      font-size: 1.2rem;
+      margin: 14px 0 0;
+      font-size: 1rem;
       line-height: 1.25;
-      font-weight: 950;
+      font-weight: 850;
     }
 
     .use-card p,
@@ -841,17 +844,18 @@
     .faq p {
       margin: 9px 0 0;
       color: #5f6878;
-      line-height: 1.72;
-      font-weight: 650;
+      font-size: 0.92rem;
+      line-height: 1.64;
+      font-weight: 560;
     }
 
     .example {
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      background: rgba(255, 255, 255, 0.72);
-      box-shadow: var(--soft-shadow);
-      backdrop-filter: blur(18px);
-      padding: 22px;
+      border: 1px solid rgba(226, 232, 240, 0.92);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: none;
+      backdrop-filter: blur(10px);
+      padding: 18px;
     }
 
     .example-row {
@@ -863,14 +867,14 @@
 
     .example-panel {
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.82);
-      border-radius: 22px;
-      background: rgba(255, 255, 255, 0.82);
-      box-shadow: 0 10px 24px rgba(80, 65, 130, 0.08);
+      border: 1px solid rgba(226, 232, 240, 0.88);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: none;
     }
 
     .stripe {
-      height: 7px;
+      height: 4px;
     }
 
     .stripe.pink { background: var(--pink); }
@@ -878,7 +882,7 @@
     .stripe.green { background: #82ec7a; }
 
     .example-panel div:last-child {
-      padding: 20px;
+      padding: 16px;
     }
 
     .example-panel p {
@@ -887,22 +891,22 @@
 
     .example-label {
       color: #777f8f;
-      font-size: 0.82rem;
-      font-weight: 950;
-      letter-spacing: 0.14em;
+      font-size: 0.74rem;
+      font-weight: 820;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 
     .example-value {
       margin-top: 12px !important;
-      font-size: 2.4rem;
-      font-weight: 950;
+      font-size: 1.66rem;
+      font-weight: 850;
     }
 
     .example-detail {
       margin-top: 6px !important;
       color: #606b7b;
-      font-weight: 750;
+      font-weight: 620;
     }
 
     .arrow {
@@ -934,7 +938,7 @@
     }
 
     .step-card {
-      padding: 22px;
+      padding: 18px;
     }
 
     .step-number {
@@ -942,29 +946,30 @@
       width: 42px;
       height: 42px;
       place-items: center;
-      border-radius: 16px;
+      border-radius: 12px;
       background: var(--ink);
       color: white;
       font-size: 1.05rem;
-      font-weight: 950;
+      font-weight: 850;
     }
 
     .benefit {
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      border-radius: 14px;
       background: rgba(255, 255, 255, 0.72);
-      box-shadow: 0 10px 24px rgba(80, 65, 130, 0.07);
-      padding: 16px;
+      box-shadow: none;
+      padding: 14px;
       color: #556171;
-      font-weight: 850;
+      font-size: 0.9rem;
+      font-weight: 700;
       line-height: 1.5;
     }
 
     .copy-card {
-      padding: 26px;
+      padding: 18px 20px;
     }
 
     .copy-card h2 {
@@ -972,19 +977,20 @@
     }
 
     .copy-card h3 {
-      margin: 18px 0 0;
+      margin: 14px 0 0;
       color: var(--ink);
-      font-size: 1.14rem;
+      font-size: 0.98rem;
       line-height: 1.35;
-      font-weight: 950;
+      font-weight: 850;
     }
 
     .copy-card ol {
       margin: 12px 0 0;
       padding-left: 22px;
       color: #5f6878;
-      line-height: 1.72;
-      font-weight: 700;
+      font-size: 0.92rem;
+      line-height: 1.64;
+      font-weight: 580;
     }
 
     .copy-card li + li {
@@ -993,19 +999,19 @@
 
     .faq {
       display: grid;
-      gap: 12px;
+      gap: 9px;
     }
 
     .faq details {
-      padding: 18px 20px;
+      padding: 13px 15px;
     }
 
     .faq summary {
       cursor: pointer;
       list-style: none;
       color: var(--ink);
-      font-size: 1.08rem;
-      font-weight: 950;
+      font-size: 0.94rem;
+      font-weight: 820;
     }
 
     .faq summary::-webkit-details-marker {
@@ -1095,8 +1101,8 @@
     .batch-note {
       margin: 0;
       color: #667085;
-      font-size: 0.92rem;
-      font-weight: 750;
+      font-size: 0.9rem;
+      font-weight: 560;
       line-height: 1.55;
     }
 
@@ -1105,18 +1111,18 @@
       grid-template-columns: minmax(0, 1fr) auto auto;
       gap: 10px;
       align-items: center;
-      margin-top: 16px;
+      margin-top: 14px;
     }
 
     .queue-summary {
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.7);
-      box-shadow: 0 8px 20px rgba(80, 65, 130, 0.06);
-      padding: 13px 14px;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      border-radius: 12px;
+      background: rgba(248, 250, 252, 0.72);
+      box-shadow: none;
+      padding: 11px 12px;
       color: #5f6878;
-      font-size: 0.92rem;
-      font-weight: 900;
+      font-size: 0.9rem;
+      font-weight: 650;
     }
 
     .secondary-button {
@@ -1124,15 +1130,15 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      min-height: 48px;
-      border: 1px solid rgba(124, 99, 255, 0.18);
-      border-radius: 18px;
+      min-height: 44px;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      border-radius: 12px;
       background: rgba(255, 255, 255, 0.86);
-      color: #4f46a5;
-      box-shadow: 0 10px 24px rgba(80, 65, 130, 0.08);
+      color: #475569;
+      box-shadow: none;
       cursor: pointer;
-      font-weight: 950;
-      padding: 12px 16px;
+      font-weight: 780;
+      padding: 10px 14px;
       transition: 180ms ease;
       white-space: nowrap;
     }
@@ -1149,30 +1155,30 @@
 
     .batch-list {
       display: grid;
-      gap: 10px;
-      margin-top: 16px;
+      gap: 8px;
+      margin-top: 14px;
     }
 
     .batch-empty {
       border: 1px solid rgba(226, 232, 240, 0.8);
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.62);
+      border-radius: 14px;
+      background: rgba(248, 250, 252, 0.74);
       color: #667085;
       padding: 16px;
       text-align: center;
-      font-weight: 800;
+      font-weight: 650;
     }
 
     .file-row {
       display: grid;
       grid-template-columns: minmax(0, 1.7fr) minmax(104px, 0.72fr) minmax(116px, 0.82fr) minmax(116px, 0.86fr) auto;
-      gap: 10px;
+      gap: 8px;
       align-items: center;
-      border: 1px solid rgba(255, 255, 255, 0.78);
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.78);
-      box-shadow: 0 10px 24px rgba(80, 65, 130, 0.08);
-      padding: 12px;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: none;
+      padding: 10px 12px;
     }
 
     .file-main {
@@ -1183,7 +1189,7 @@
       margin: 0;
       color: var(--ink);
       font-size: 0.95rem;
-      font-weight: 950;
+      font-weight: 780;
       overflow-wrap: anywhere;
     }
 
@@ -1191,7 +1197,7 @@
       margin: 6px 0 0;
       color: #b42318;
       font-size: 0.82rem;
-      font-weight: 800;
+      font-weight: 680;
       line-height: 1.45;
       overflow-wrap: anywhere;
     }
@@ -1200,7 +1206,7 @@
       margin: 6px 0 0;
       color: #047857;
       font-size: 0.82rem;
-      font-weight: 850;
+      font-weight: 700;
       line-height: 1.45;
     }
 
@@ -1226,7 +1232,7 @@
       border-radius: 999px;
       padding: 6px 10px;
       font-size: 0.78rem;
-      font-weight: 950;
+      font-weight: 750;
     }
 
     .status-waiting {
@@ -1253,13 +1259,13 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 38px;
-      border-radius: 14px;
+      min-height: 36px;
+      border-radius: 10px;
       background: var(--ink);
       color: white;
       cursor: pointer;
       font-size: 0.84rem;
-      font-weight: 950;
+      font-weight: 760;
       padding: 8px 12px;
       white-space: nowrap;
     }
@@ -1292,6 +1298,10 @@
       border-top-color: white;
       border-radius: 999px;
       animation: spin 780ms linear infinite;
+    }
+
+    #compressIcon:empty {
+      display: none;
     }
 
     @keyframes spin {
@@ -1359,8 +1369,12 @@
       }
 
       .tool-card {
-        padding: 16px;
-        border-radius: 24px;
+        padding: 18px;
+        border-radius: 20px;
+      }
+
+      .drop-empty {
+        min-height: 150px;
       }
 
       .tool-head,
@@ -1377,11 +1391,11 @@
       }
 
       .section {
-        padding: 34px 0;
+        padding: 28px 0;
       }
 
       .example-value {
-        font-size: 2rem;
+        font-size: 1.55rem;
       }
 
       .file-row {
@@ -1444,9 +1458,9 @@
             <div>
               <p class="tool-eyebrow">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l1.7 5.1L19 10l-5.3 1.9L12 17l-1.7-5.1L5 10l5.3-1.9L12 3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-                Local 20KB max compressor
+                Browser-only batch tool
               </p>
-              <h2 class="tool-title">Make a tiny image in seconds</h2>
+              <h2 class="tool-title">Compress images to 20KB or less</h2>
             </div>
             <span class="browser-only">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 11V8a4 4 0 018 0v3M7 11h10v9H7v-9z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
@@ -1463,18 +1477,16 @@
                   <path d="M12 16V4m0 0L7 9m5-5l5 5M5 16v3h14v-3" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </span>
-              <p class="drop-title">Drag and drop images here, or click to upload</p>
-              <p class="drop-help">Upload one or multiple images and compress each image to 20KB or less.</p>
+              <p class="drop-title">Upload images</p>
+              <p class="drop-help">Drag and drop images here, or click to choose JPG, PNG, or WebP files.</p>
             </div>
           </div>
 
           <div class="batch-toolbar">
             <div id="queueSummary" class="queue-summary"><strong>Target:</strong> 20KB max · Up to 10 images</div>
             <button id="compressButton" class="primary-button" type="button" disabled>
-              <span id="compressIcon" aria-hidden="true">
-                <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.7 5.1L19 10l-5.3 1.9L12 17l-1.7-5.1L5 10l5.3-1.9L12 3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-              </span>
-              <span id="compressText">Compress Images to 20KB or Less</span>
+              <span id="compressIcon" aria-hidden="true"></span>
+              <span id="compressText">Compress</span>
             </button>
             <button id="clearButton" class="secondary-button" type="button" disabled>Clear All</button>
           </div>
@@ -1699,23 +1711,23 @@
             <p>Yes. Many job application portals ask for small profile photos, and this photo size reducer to 20KB is designed for those strict form upload limits.</p>
           </details>
           <details>
-            <summary><span class="summary-row"><h3>Can I compress multiple images to 20KB?</h3><span class="plus" aria-hidden="true">+</span></span></summary>
+            <summary><h3 class="summary-row">Can I compress multiple images to 20KB?<span class="plus" aria-hidden="true">+</span></h3></summary>
             <p>Yes, you can upload multiple images and compress each image to 20KB or less. Each file is processed separately, so one failed image does not stop the rest of the batch.</p>
           </details>
           <details>
-            <summary><span class="summary-row"><h3>Will my image be uploaded to a server?</h3><span class="plus" aria-hidden="true">+</span></span></summary>
+            <summary><h3 class="summary-row">Will my image be uploaded to a server?<span class="plus" aria-hidden="true">+</span></h3></summary>
             <p>No, the compression runs locally in your browser. Your selected files stay on your device while the canvas compression process creates smaller downloadable results.</p>
           </details>
           <details>
-            <summary><span class="summary-row"><h3>Why can some images not be compressed to 20KB?</h3><span class="plus" aria-hidden="true">+</span></span></summary>
+            <summary><h3 class="summary-row">Why can some images not be compressed to 20KB?<span class="plus" aria-hidden="true">+</span></h3></summary>
             <p>Very large, detailed, or transparent images may be hard to reduce to 20KB while keeping usable quality. In those cases, starting with a smaller or simpler image usually works better.</p>
           </details>
           <details>
-            <summary><span class="summary-row"><h3>Can I compress JPG, PNG, and WebP images?</h3><span class="plus" aria-hidden="true">+</span></span></summary>
+            <summary><h3 class="summary-row">Can I compress JPG, PNG, and WebP images?<span class="plus" aria-hidden="true">+</span></h3></summary>
             <p>Yes, the tool supports JPG, JPEG, PNG, and WebP images. Complex PNG files may need stronger compression or a more compact output format to meet the 20KB limit.</p>
           </details>
           <details>
-            <summary><span class="summary-row"><h3>Is 20KB enough for application forms?</h3><span class="plus" aria-hidden="true">+</span></span></summary>
+            <summary><h3 class="summary-row">Is 20KB enough for application forms?<span class="plus" aria-hidden="true">+</span></h3></summary>
             <p>Many online forms require small image files, and 20KB is a common target for simple photos, avatars, and document uploads. Always check the final file before submitting it.</p>
           </details>
         </div>
@@ -1903,7 +1915,7 @@
       els.compressButton.disabled = true;
       els.clearButton.disabled = true;
       els.compressIcon.innerHTML = '<span class="spinner"></span>';
-      els.compressText.textContent = "Compressing";
+      els.compressText.textContent = "Working";
       setProgress(0, "Starting compression");
 
       for (let index = 0; index < queue.length; index += 1) {
@@ -1948,8 +1960,8 @@
 
       state.isCompressing = false;
       hideProgress();
-      els.compressIcon.innerHTML = '<svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M12 3l1.7 5.1L19 10l-5.3 1.9L12 17l-1.7-5.1L5 10l5.3-1.9L12 3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
-      els.compressText.textContent = "Compress Images to 20KB or Less";
+      els.compressIcon.innerHTML = "";
+      els.compressText.textContent = "Compress";
       updateControls();
 
       const successCount = getSuccessfulItems().length;
