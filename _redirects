@@ -1,0 +1,7 @@
+# Keep links to the former policy pages working after the single-page migration.
+/privacy /#privacy 301
+/privacy/ /#privacy 301
+/privacy.html /#privacy 301
+/terms /#terms 301
+/terms/ /#terms 301
+/terms.html /#terms 301
